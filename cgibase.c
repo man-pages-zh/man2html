@@ -97,7 +97,7 @@ void print_sig()
 
 void
 include_file_html(char *g) {
-     printf("<A HREF=\"file:/usr/include/%s\">%s</A>&gt;", g,g);
+     printf("<A HREF=\"file:///usr/include/%s\">%s</A>&gt;", g,g);
 }
 
 void

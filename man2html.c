@@ -118,11 +118,11 @@ add_links(char *c)
     ** www.host.name           -> http://www.host.name
     ** ftp.host.name           -> ftp://ftp.host.name
     ** name@host               -> mailto:name@host
-    ** <name.h>                -> file:/usr/include/name.h   (guess)
+    ** <name.h>                -> file:///usr/include/name.h   (guess)
     **
     ** Other possible links to add in the future:
     **
-    ** /dir/dir/file  -> file:/dir/dir/file
+    ** /dir/dir/file  -> file:///dir/dir/file
     */
     int i,j,nr;
     char *f, *g, *h;
@@ -3271,7 +3271,7 @@ main(int argc, char **argv) {
 		   "The requested file %s is not a valid (unformatted) "
 		   "man page.\nIf the file is a formatted man page, "
 		   "you could try to load the\n"
-		   "<A HREF=\"file://localhost%s\">plain file</A>.\n",
+		   "<A HREF=\"file://%s\">plain file</A>.\n",
 		   filename, filename);
 	else
 	     error_page(403, "Invalid Man Page",
