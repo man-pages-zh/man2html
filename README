@@ -40,8 +40,8 @@ able to write this directory to that group.)
 Structure of the collection of scripts:
 	man2html is the main script.
 	It uses man.aux when called without arguments.
-	It uses manwhatis when asked for an index of manpages+descriptions.
-	It uses mansec when asked for a compact index of manpages.
+	It uses manwhatis when asked for an index of man pages+descriptions.
+	It uses mansec when asked for a compact index of man pages.
 	It uses mansearch when asked for a glimpse search.
 	  In its turn mansearch uses mansearch.aux when called
 	  without arguments. It uses mansearchhelp (which uses
