@@ -24,7 +24,12 @@ fi
 
 # The user has to set MANHTMLPAGER (or he will get httpd-free lynx).
 # Pick your favorite browser: lynx, xmosaic, netscape, arena, amaya, grail, ...
-HMAN_BROWSER=${MANHTMLPAGER-lynxcgi}
+if [ x"$MANHTMLPAGER" = x ]  && ! which lynx > /dev/null ; then
+	HMAN_BROWSER=sensible-browser
+else
+	HMAN_BROWSER=${MANHTMLPAGER-lynxcgi}
+fi
+
 #
 # If the man pages are on a remote host, specify it in MANHTMLHOST.
 HOST=${MANHTMLHOST-localhost}
