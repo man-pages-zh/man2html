@@ -42,7 +42,7 @@ if [ $# -gt 1 -a "$1" = "-H" ]; then
 fi
 
 # Interface to a live (already running) netscape browser.
-function nsfunc () {
+nsfunc () {
 	if ( /bin/ps xc | grep -q 'netscape$' ) ; then
 		if [ -x  netscape-remote ] ; then
 			exec netscape-remote  -remote "openURL($1,new_window)"
