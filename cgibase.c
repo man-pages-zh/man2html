@@ -24,7 +24,7 @@ static int relat_html_style = 0;
 static char *man2htmlpath = "/cgi-bin/man/man2html"; 	/* default */
 static char *cgibase_format = "http://%s"; 		/* host.domain:port */
 static char *cgibase_ll_format = "lynxcgi:%s"; 		/* directory */
-static char *cgibase = "http://localhost";		/* default */
+static char *cgibase = "";				/* default */
 
 /*
  * Separator between URL and argument string.
