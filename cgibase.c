@@ -18,7 +18,7 @@ static int relat_html_style = 0;
 /*
  * Either the user is non-local (or local, but using httpd),
  * in which case we use http:/cgi-bin, or the user is local
- * and uses lynx, and we use lynxcgi:/home/httpd/cgi-bin.
+ * and uses lynx, and we use lynxcgi:/usr/lib/cgi-bin.
  */
 
 static char *man2htmlpath = "/cgi-bin/man/man2html"; 	/* default */

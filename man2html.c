@@ -3109,7 +3109,7 @@ main(int argc, char **argv) {
 	 case 'H':
 	      set_cgibase(optarg); break;
 	 case 'l':
-	      set_lynxcgibase("/home/httpd"); break;
+	      set_lynxcgibase("/usr/lib"); break;
 	 case 'L':
 	      set_lynxcgibase(optarg); break;
 	 case 'M':

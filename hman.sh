@@ -57,7 +57,7 @@ nsfunc () {
 case "$HMAN_BROWSER" in
      lynxcgi)
 	HMAN_BROWSER=lynx
-	CG="lynxcgi:/home/httpd/cgi-bin/man"
+	CG="lynxcgi:/usr/lib/cgi-bin/man"
 	;;
      netscape)
         HMAN_BROWSER=nsfunc
