@@ -95,6 +95,7 @@ static STRDEF standardchar[] = {
     { V('b','v'), 1, "|", NULL  },
     { V('c','i'), 1, "o", NULL  }, 	/* circle */
     { V('c','o'), 1, "&#169;", NULL  },
+    { V('c','q'), 1, "'", NULL },
     { V('c','t'), 1, "&#162;", NULL  },
     { V('d','e'), 1, "&#176;", NULL  },
     { V('d','g'), 1, "+", NULL  }, 	/* dagger */
@@ -114,9 +115,11 @@ static STRDEF standardchar[] = {
     { V('i','s'), 8, "Integral", NULL }, /* integral sign */
     { V('l','f'), 2, "|_", NULL  },
     { V('l','k'), 1, "<FONT SIZE=\"+2\">{</FONT>", NULL  },
+    { V('l','q'), 1, "\"", NULL },
     { V('m','i'), 1, "-", NULL  },
     { V('m','u'), 1, "&#215;", NULL  },
     { V('n','o'), 1, "&#172;", NULL  },
+    { V('o','q'), 1, "'", NULL },
     { V('o','r'), 1, "|", NULL  },
     { V('p','d'), 1, "d", NULL }, 	/* partial derivative */
     { V('p','l'), 1, "+", NULL  },
@@ -125,6 +128,7 @@ static STRDEF standardchar[] = {
     { V('r','g'), 1, "&#174;", NULL  },
     { V('r','k'), 1, "<FONT SIZE=\"+2\">}</FONT>", NULL  },
     { V('r','n'), 1, "&#175;", NULL  },
+    { V('r','q'), 1, "\"", NULL },
     { V('r','u'), 1, "_", NULL  },
     { V('s','c'), 1, "&#167;", NULL  },
     { V('s','l'), 1, "/", NULL  },
