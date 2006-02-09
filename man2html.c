@@ -511,7 +511,7 @@ static int single_escape=0;
 static char *
 scan_escape(char *c) {
     char *h=NULL;
-    char b[5];
+    char b[10];
     INTDEF *intd;
     int exoutputp,exskipescape;
     int i,j;
@@ -660,6 +660,20 @@ scan_escape(char *c) {
 	    else c++;
 	output_possible=exoutputp;
 	skip_escape=exskipescape;
+	break;
+    case 'N':	
+	/* convert \N'ddd' into &#ddd; */
+	c++;
+	i=*c;
+	j=0;
+	b[j++] = '&';
+	b[j++] = '#';
+	while (*(++c) != i)
+	    if (isdigit(*c) && j < sizeof(b) - 2)
+		    b[j++] = *c;
+	b[j++] = ';';
+	b[j] = '\0';
+	h = b;
 	break;
     case 'c': no_newline_output=1; break;
     case '{': newline_for_fun++; h="";break;
