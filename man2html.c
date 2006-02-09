@@ -3256,11 +3256,13 @@ main(int argc, char **argv) {
     out_html(NEWLINE);
     if (output_possible) {
 	/* &nbsp; for mosaic users */
-	printf("<HR>\n<A NAME=\"index\">&nbsp;</A><H2>Index</H2>\n<DL>\n");
-	manidx[mip]=0;
-	printf("%s", manidx);
-	if (subs) printf("</DL>\n");
-	printf("</DL>\n");
+	if (manidx) {
+	    printf("<HR>\n<A NAME=\"index\">&nbsp;</A><H2>Index</H2>\n<DL>\n");
+	    manidx[mip]=0;
+	    printf("%s", manidx);
+	    if (subs) printf("</DL>\n");
+	    printf("</DL>\n");
+	}
 	print_sig();
 	printf("</BODY>\n</HTML>\n");
     } else {
