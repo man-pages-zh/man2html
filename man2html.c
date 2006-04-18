@@ -173,7 +173,8 @@ add_links(char *c)
                                 /* section is n or l or starts with a digit */
 		  && strchr("123456789nl", f[1])
 		  && (g-f == 2 || (g-f == 3 && isdigit(f[1]) && isalpha(f[2]))
-		               || (f[2] == 'X' && isdigit(f[1])))
+		               || (f[2] == 'X' && isdigit(f[1]))
+		               || (strncmp(f+1,"3pm",g-f-1) == 0))
 	       ) {
 		/* this might be a link */
 		h=f-1;
