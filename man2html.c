@@ -1676,7 +1676,7 @@ scan_request(char *c) {
     char *wordlist[20];
     int words;
     char *sl;
-    STRDEF *owndef;
+    LONGSTRDEF *owndef;
 
     while (*c == ' ' || *c == '\t')
 	    c++;
@@ -2378,11 +2378,13 @@ scan_request(char *c) {
             /* .de xx yy : define or redefine macro xx; end at .yy (..) */
             /* define or handle as .ig yy */
 	    {
-		STRDEF *de;
+		LONGSTRDEF *de;
+		char *longname;
 		int olen=0;
 		c=c+j;
 		sl=fill_words(c, wordlist, SIZE(wordlist), &words, '\n');
 		i=V(c[0],c[1]);j=2;
+		longname = c;
 		if (words == 1) wordlist[1]=".."; else {
 		    wordlist[1]--;
 		    wordlist[1][0]='.';
@@ -2391,8 +2393,7 @@ scan_request(char *c) {
 		c=sl+1;
 		sl=c;
 		while (*c && strncmp(c,wordlist[1],j)) c=skip_till_newline(c);
-		de=defdef;
-		while (de && de->nr!= i) de=de->next;
+		de = find_longstrdef(defdef, i, longname, &longname); 
 		if (mode && de) olen=strlen(de->st);
 		j=olen+c-sl;
 		h= (char*) xmalloc((j*2+4)*sizeof(char));
@@ -2413,8 +2414,9 @@ scan_request(char *c) {
 			if (de->st) free(de->st);
 			de->st=h;
 		    } else {
-			de = (STRDEF*) xmalloc(sizeof(STRDEF));
+			de = (LONGSTRDEF*) xmalloc(sizeof(LONGSTRDEF));
 			de->nr=i;
+			de->longname=longname;
 			de->next=defdef;
 			de->st=h;
 			defdef=de;
@@ -2893,13 +2895,12 @@ scan_request(char *c) {
 
  	default:
              /* search macro database of self-defined macros */
- 	    owndef = defdef;
-	    while (owndef && owndef->nr!=i) owndef=owndef->next;
+	    owndef = find_longstrdef(defdef, i, c, NULL);
 	    if (owndef) {
 		char **oldargument;
 		int deflen;
 		int onff;
-		sl=fill_words(c+j, wordlist, SIZE(wordlist), &words, '\n');
+		sl=fill_words(c+strlen(owndef->longname), wordlist, SIZE(wordlist), &words, '\n');
 		c=sl+1;
 		*sl=0;
 		for (i=1; i<words; i++)

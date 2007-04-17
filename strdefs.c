@@ -1,4 +1,6 @@
 #include "defs.h"
+#include <ctype.h>
+#include <string.h>
 
 #ifndef NULL
 #define NULL	((void *) 0)
@@ -9,7 +11,8 @@ int nroff = 1;
 #define NROFF (-666)
 #define TROFF (-667)
 
-STRDEF *chardef, *strdef, *defdef;
+STRDEF *chardef, *strdef;
+LONGSTRDEF *defdef;
 INTDEF *intdef;
 
 static INTDEF standardint[] = {
@@ -177,4 +180,25 @@ void stdinit(void) {
     }
     intdef = &standardint[0];
     defdef = NULL;
+}
+
+
+LONGSTRDEF* find_longstrdef(LONGSTRDEF * head, int nr, char * longname, char ** out_longname)
+{
+	char *p, c;
+	LONGSTRDEF *de;
+	
+	p = longname;
+	while (p && !isspace(*p)) p++;
+	c = *p;
+	*p = 0;
+
+	de = head;
+	while (de && (de->nr != nr || (de->longname && strcmp(longname, de->longname))))
+		de = de->next;
+
+	if (out_longname)
+		*out_longname = de ? de->longname : xstrdup(longname);
+	*p = c;
+	return de;
 }
