@@ -1307,7 +1307,7 @@ trans_char(char *c, char s, char t) {
  */
 static char *
 fill_words(char *str, char *words[], int maxn, int *n, char eow) {
-	char *s = str;
+	char *s = str, *t;
 	int backslash = 0;
 	int skipspace = 0;	/* 1 if space is not end-of-word */
 
@@ -1316,8 +1316,15 @@ fill_words(char *str, char *words[], int maxn, int *n, char eow) {
 	while (*s && (*s != '\n' || backslash)) {
 		if (!backslash) {
 			if (*s == '"') {
-				*s = '\a';
-				skipspace = !skipspace;
+				if (skipspace && *(s+1) == '"') { 
+				/* "" inside the quoted text means " */
+					for (t = s++; t > words[*n]; t--)
+						*t = *(t-1);
+					words[*n]++;							
+				} else {	
+					*s = '\a';
+					skipspace = !skipspace;
+				}					
 			} else if (*s == escapesym) {
 				backslash = 1;
 			} else if ((*s == ' ' || *s == '\t') && !skipspace) {
