@@ -615,6 +615,7 @@ static int single_escape=0;
 static char *
 scan_escape(char *c) {
     char *h=NULL;
+    char *tmp = NULL;
     char b[10];
     INTDEF *intd;
     int exoutputp,exskipescape;
@@ -630,8 +631,26 @@ scan_escape(char *c) {
     case '$':
 	if (argument) {
 	    c++;
-	    i=(*c -'1');
-	    if (!(h=argument[i])) h="";
+	    if (*c == '*' || *c == '@') {
+	    	int len = 0;
+		int quote = (*c == '@') ? 2 : 0;
+
+	    	for (i = 0; ((h = argument[i])); i++) 
+			len += strlen(h) + 1 + quote;
+		tmp = (char*) xmalloc(len + 1);
+		*tmp = 0;
+			
+		for (i = 0; ((h = argument[i])); i++) {
+			sprintf(tmp, "%s %s%s%s", tmp,
+						  quote ? "\"" : "",
+						  h,
+						  quote ? "\"" : "");
+		};
+		h = tmp + 1;
+	    } else {
+	    	i=(*c -'1');
+	    	if (!(h=argument[i])) h="";
+	  }		
 	}
 	break;
     case 'z':
@@ -791,6 +810,7 @@ scan_escape(char *c) {
     }
     c++;
     if (!skip_escape) out_html(h);
+    if (tmp) free(tmp);
     return c;
 }
 
