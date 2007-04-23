@@ -612,6 +612,9 @@ int intresult=0;
 static int skip_escape=0;
 static int single_escape=0;
 
+
+#define EXPAND_BRACKET  for (c++, i=0; *c != ']'; c++) i = i * 256 + *c; if (i < 256) i = i * 256 + ' '
+
 static char *
 scan_escape(char *c) {
     char *h=NULL;
@@ -678,13 +681,19 @@ scan_escape(char *c) {
 	c++;
 	h = expand_char(i);
 	break;
+    case '[':
+	EXPAND_BRACKET;
+	h = expand_char(i);
+	break;
     case '*':
 	c++;
 	if (*c=='(') {
 	    c++;
 	    i= c[0]*256+c[1];
 	    c++;
-	} else
+	} else if (*c == '[') {
+	    EXPAND_BRACKET;
+	} else 
 	    i= *c *256+' ';
 	h = expand_string(i);
 	break;
@@ -695,6 +704,8 @@ scan_escape(char *c) {
 	    c=scan_escape(c);
 	    c--;
 	    i=intresult;
+	} else 	if (*c == '[') {
+		EXPAND_BRACKET;
 	} else 	if (*c != '(')
 	    i=*c;
 	else {
@@ -2189,6 +2200,8 @@ scan_request(char *c) {
 	    */
 	    out_html("\"></A>");
 	    break;
+	case V('P',' '):
+	case V('P','\n'):
 	case V('L','P'):
 	case V('P','P'):
 	    dl_end();
