@@ -12,6 +12,8 @@
    Improved things a little - April 1997 & January 1998 & Dec 2001 -
    aeb@cwi.nl. */
 
+/* some code added by Tsukasa Hamnao. */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -21,7 +23,8 @@
 #include <ctype.h>
 #include <sys/stat.h>
 #include "defs.h"
-#include "../src/version.h"
+//#include "../src/version.h"
+static char version[] = "1.6f-1";
 
 /* BSD mandoc Bd/Ed example(?) blocks */
 #define BD_LITERAL  1
@@ -2326,7 +2329,9 @@ scan_request(char *c) {
 		    *q = '\0';
 		    out_html(t);
 		    free(t);
-		    out_html("</TITLE>\n</HEAD><BODY>\n<H1>");
+		    out_html("</TITLE>\n");
+		    out_html("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"); 
+		    out_html("</HEAD><BODY>\n<H1>");
 		    scan_troff(wordlist[0], 0, NULL);
 		    out_html("</H1>\nSection: ");
 		    if (words>4)
