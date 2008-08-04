@@ -3255,7 +3255,8 @@ static void
 usage(void) {
      error_page(500, "man2html: bad invocation",
 	"Call: man2html [-l|-h host.domain:port] [-p|-q] [filename]\n"
-	"or:   man2html -r [filename]\n");
+	"or:   man2html -r [filename]\n"
+	"or:   man2html -c [filename]\n");
 }
 
 static void
@@ -3309,7 +3310,7 @@ main(int argc, char **argv) {
 /*    printf("Content-type: text/html\n\n"); */
 
     opterr = 0;			/* no stderr error messages */
-    while ((c = getopt (argc, argv, "D:E:hH:lL:M:pqr?vVf")) != -1) {
+    while ((c = getopt (argc, argv, "D:E:hH:lL:M:pqrc?vVf")) != -1) {
 	 switch(c) {
 	 case 'D':
 	      goto_dir(optarg, 0, 0); break;
@@ -3331,6 +3332,8 @@ main(int argc, char **argv) {
 	      set_separator('?'); break;
 	 case 'r':
 	      set_relative_html_links(); break;
+	 case 'c':
+	      set_current_html_links(); break;
 	 case 'v':
 	 case 'V':
 	      error_page(0, "Version", "%s from man-%s", argv[0], version);
