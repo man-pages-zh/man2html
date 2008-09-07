@@ -2131,7 +2131,10 @@ scan_request(char *c) {
 		char font[2];
 		font[0] = c[0]; font[1] = c[1];
 		c = c+j;
-		if (*c == '\n') c++;
+		if (*c == '\n') {
+		    c++;
+		    break;
+		}
 		sl = fill_words(c, wordlist, SIZE(wordlist), &words, '\n');
 		c = sl+1;
 		/* .BR name (section)
