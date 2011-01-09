@@ -82,13 +82,13 @@ void print_sig()
 {
     char timebuf[TIMEBUFSZ];
     struct tm *timetm;
-    time_t clock;
+    time_t now;
 
     timebuf[0] = 0;
 #ifdef TIMEFORMAT
     sprintf(timebuf, "Time: ");
-    clock=time(NULL);
-    timetm=gmtime(&clock);
+    now=time(NULL);
+    timetm=gmtime(&now);
     strftime(timebuf+6, TIMEBUFSZ-6, TIMEFORMAT, timetm);
     timebuf[TIMEBUFSZ-1] = 0;
 #endif

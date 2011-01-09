@@ -644,7 +644,7 @@ scan_escape(char *c) {
 		*tmp = 0;
 			
 		for (i = 0; ((h = argument[i])); i++) {
-			sprintf(tmp, "%s %s%s%s", tmp,
+			sprintf(tmp + strlen(tmp), " %s%s%s",
 						  quote ? "\"" : "",
 						  h,
 						  quote ? "\"" : "");
@@ -1720,12 +1720,12 @@ scan_request(char *c) {
 		for (i=1; i<words; i++)
 		    wordlist[i][-1]=0;
 		for (i=0; i<words; i++) {
-		    char *h=NULL;
+		    char *hl=NULL;
 		    if (mandoc_command)
-			 scan_troff_mandoc(wordlist[i],1,&h);
+			 scan_troff_mandoc(wordlist[i],1,&hl);
 		    else
-			 scan_troff(wordlist[i],2,&h);
-		    wordlist[i]=h;
+			 scan_troff(wordlist[i],2,&hl);
+		    wordlist[i]=hl;
 		}
 		for (i=words; i<SIZE(wordlist); i++)
 		    wordlist[i]=NULL;
@@ -1806,24 +1806,24 @@ scan_request(char *c) {
 		single_escape=1;
 		curpos=0;
 		if (!de) {
-		    char *h;
+		    char *hl;
 		    de=(STRDEF*) xmalloc(sizeof(STRDEF));
 		    de->nr=i;
 		    de->slen=0;
 		    de->next=strdef;
 		    de->st=NULL;
 		    strdef=de;
-		    h=NULL;
-		    c=scan_troff(c, 1, &h);
-		    de->st=h;
+		    hl=NULL;
+		    c=scan_troff(c, 1, &hl);
+		    de->st=hl;
 		    de->slen=curpos;
 		} else {
 		    if (mode) {		/* .ds */
-			char *h=NULL;
-			c=scan_troff(c, 1, &h);
+			char *hl=NULL;
+			c=scan_troff(c, 1, &hl);
 			free(de->st);	/* segfault XXX */
 			de->slen=curpos;
-			de->st=h;
+			de->st=hl;
 		    } else {		/* .as */
 			c=scan_troff(c,1,&de->st); 	/* XXX */
 			de->slen+=curpos;
