@@ -29,7 +29,7 @@
 
 #define SIZE(a)	(sizeof(a)/sizeof(*a))
 #define DOCTYPE "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
-#define CONTENTTYPE "Content-type: text/html\n\n"
+#define CONTENTTYPE "Content-type: text/html; charset=UTF-8\n\n"
 
 static char NEWLINE[2]="\n";
 static char idxlabel[6] = "ixAAA";
