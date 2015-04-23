@@ -2362,15 +2362,12 @@ sh_below:
             }
             trans_char(c,'"', '\a');
             add_to_index(mode, c);
-            out_html("<A NAME=\"");
-            out_html(label);
-            /* &nbsp; for mosaic users */
-            if (mode) out_html("\">&nbsp;</A>\n<H3>");
-            else out_html("\">&nbsp;</A>\n<H2>");
+            if (mode) out_html("<H2>");
+            else out_html("<H1>");
             mandoc_synopsis = (strncmp(c, "SYNOPSIS", 8) == 0);
             c = (mandoc_command ? scan_troff_mandoc : scan_troff)(c,1,NULL);
-            if (mode) out_html("</H3>\n");
-            else out_html("</H2>\n");
+            if (mode) out_html("</H2>\n");
+            else out_html("</H1>\n");
             curpos=0;
             break;
         case V('T','S'):
@@ -2388,23 +2385,11 @@ sh_below:
                     out_html(wordlist[0]);
                     out_html("</TITLE>\n");
                     out_html("<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">\n");
-                    out_html("</HEAD><BODY>\n<H1>");
-                    out_html(wordlist[0]);
-                    out_html("</H1>\nSection: ");
-                    if (words>4)
-                        out_html(wordlist[4]);
-                    else
-                        out_html(section_name(wordlist[1]));
-                    out_html(" (");
-                    out_html(wordlist[1]);
+                    out_html("</HEAD><BODY>\n");
                     if (words>2) {
-                        out_html(")<BR>Updated: ");
-                        scan_troff(wordlist[2], 1, NULL);
-                    } else out_html(")");
-                    out_html("<BR><A HREF=\"#index\">Index</A>\n");
-                    man_page_html(0,0);	/* Return to Main Contents */
+                        //scan_troff(wordlist[2], 1, NULL);
+                    } else ;
                     *sl='\n';
-                    out_html("<HR>\n");
                     if (mandoc_command) out_html("<BR>BSD mandoc<BR>");
                 }
                 c = sl+1;
@@ -3547,12 +3532,12 @@ main(int argc, char **argv) {
     out_html(NEWLINE);
     if (output_possible) {
         /* &nbsp; for mosaic users */
-        printf("<HR>\n<A NAME=\"index\">&nbsp;</A><H2>Index</H2>\n<DL>\n");
-        manidx[mip]=0;
-        printf("%s", manidx);
-        if (subs) printf("</DL>\n");
-        printf("</DL>\n");
-        print_sig();
+        //printf("<HR>\n<A NAME=\"index\">&nbsp;</A><H2>Index</H2>\n<DL>\n");
+        //manidx[mip]=0;
+        //printf("%s", manidx);
+        //if (subs) printf("</DL>\n");
+        //printf("</DL>\n");
+        //print_sig();
         printf("</BODY>\n</HTML>\n");
     } else {
         if (!filename)
