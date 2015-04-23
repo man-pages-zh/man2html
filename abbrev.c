@@ -48,15 +48,16 @@ char *abbrev_list[] = {
     "4ASSY", "Sun-4 Assembly Language Reference",
     "SARCH", "<FONT SIZE=\"-1\">SPARC</FONT> Architecture Manual",
     "KR", "The C Programming Language",
-    0, 0 };
+    0, 0
+};
 
 char *lookup_abbrev (char *s)
 {
     int i=0;
 
     if (!s)
-	 return "";
+        return "";
     while (abbrev_list[i] && strcmp(s, abbrev_list[i]))
-	 i = i+2;
+        i = i+2;
     return abbrev_list[i] ? abbrev_list[i+1] : s;
 }

@@ -22,7 +22,8 @@ static INTDEF standardint[] = {
     { V('.','A'), NROFF, 0, NULL },
     { V('.','T'), TROFF, 0, NULL },
     { V('.','V'), 1,     0, NULL }, /* the me package tests for this */
-    { 0, 0, 0, NULL } };
+    { 0, 0, 0, NULL }
+};
 
 static STRDEF standardstring[] = {
     { V('R',' '), 1, "&#174;", NULL },
@@ -143,33 +144,33 @@ void stdinit(void) {
     stdf = &standardchar[0];
     i = 0;
     while (stdf->nr) {
-	if (stdf->st) stdf->st = xstrdup(stdf->st);
-	stdf->next = &standardchar[i];
-	stdf = stdf->next;
-	i++;
+        if (stdf->st) stdf->st = xstrdup(stdf->st);
+        stdf->next = &standardchar[i];
+        stdf = stdf->next;
+        i++;
     }
     chardef=&standardchar[0];
 
     stdf=&standardstring[0];
     i=0;
     while (stdf->nr) {
-	 /* waste a little memory, and make a copy, to avoid
-	    the segfault when we free non-malloced memory */
-	if (stdf->st) stdf->st = xstrdup(stdf->st);
-	stdf->next = &standardstring[i];
-	stdf = stdf->next;
-	i++;
+        /* waste a little memory, and make a copy, to avoid
+           the segfault when we free non-malloced memory */
+        if (stdf->st) stdf->st = xstrdup(stdf->st);
+        stdf->next = &standardstring[i];
+        stdf = stdf->next;
+        i++;
     }
     strdef=&standardstring[0];
 
     intdef=&standardint[0];
     i=0;
     while (intdef->nr) {
-	if (intdef->nr == NROFF) intdef->nr = nroff; else
-	if (intdef->nr == TROFF) intdef->nr = !nroff;
-	intdef->next = &standardint[i];
-	intdef = intdef->next;
-	i++;
+        if (intdef->nr == NROFF) intdef->nr = nroff;
+        else if (intdef->nr == TROFF) intdef->nr = !nroff;
+        intdef->next = &standardint[i];
+        intdef = intdef->next;
+        i++;
     }
     intdef = &standardint[0];
     defdef = NULL;
