@@ -5,8 +5,8 @@
 CC = gcc
 CFLAGS += -Wall -Wstrict-prototypes -Wmissing-prototypes
 OBJECTS = man2html.o cgibase.o abbrev.o strdefs.o
-bindir = /usr/local/bin
-mandir = /usr/local/share/man
+bindir = ~/software/bin
+mandir = ~/software/share/man
 vardir = /usr/local/var
 httpdir = /home/httpd
 cgiowner = nobody

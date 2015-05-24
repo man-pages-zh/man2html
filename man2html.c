@@ -21,9 +21,12 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#include <stdbool.h>
 #include "defs.h"
-//#include "../src/version.h"
+
 static char version[] = "1.6f-1";
+
+static char *css = "<link rel=\"stylesheet\" href=\"../css/style.css\" type=\"text/css\">\n";
 
 /* BSD mandoc Bd/Ed example(?) blocks */
 #define BD_LITERAL  1
@@ -50,6 +53,7 @@ int still_dd=0;
 int tabstops[20] = { 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96 };
 int maxtstop=12;
 int curpos=0;
+bool is_first_h2 = true;
 
 static char *scan_troff(char *c, int san, char **result);
 static char *scan_troff_mandoc(char *c, int san, char **result);
@@ -2120,9 +2124,9 @@ scan_request(char *c) {
                 s=strrchr(t, '.');
                 if (!s) s=t;
                 printf("<HTML><HEAD><TITLE> Manpage of %s</TITLE>\n"
-                       "</HEAD><BODY>\n"
+                       "</head><body>\n<div id=\"main\">\n"
                        "See the manpage for <A HREF=\"%s.html\">%s</A>.\n"
-                       "</BODY></HTML>\n",
+                       "</div>\n</body></html>\n",
                        s, h, h);
             } else
 #endif
@@ -2358,7 +2362,7 @@ scan_request(char *c) {
             mandoc_command = 1;
         case V('S','H'):
 sh_below:
-            c=c+j;
+            c = c + j;
             if (*c == '\n') c++;
             dl_down();
             out_html(change_to_font(0));
@@ -2369,12 +2373,20 @@ sh_below:
             }
             trans_char(c,'"', '\a');
             add_to_index(mode, c);
-            if (mode) out_html("<H2>");
-            else out_html("<H1>");
+            if (mode)
+                out_html("<h3>");
+            else if (is_first_h2) {
+                out_html("<h2>");
+                is_first_h2 = false;
+            }
+            else
+                out_html("</div>\n<h2>");
             mandoc_synopsis = (strncmp(c, "SYNOPSIS", 8) == 0);
             c = (mandoc_command ? scan_troff_mandoc : scan_troff)(c,1,NULL);
-            if (mode) out_html("</H2>\n");
-            else out_html("</H1>\n");
+            if (mode)
+                out_html("</h3>\n");
+            else
+                out_html("</h2>\n<div id=\"content\">\n");
             curpos=0;
             break;
         case V('T','S'):
@@ -2392,7 +2404,8 @@ sh_below:
                     out_html(wordlist[0]);
                     out_html("</TITLE>\n");
                     out_html("<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">\n");
-                    out_html("</HEAD><BODY>\n");
+                    out_html(css);
+                    out_html("</HEAD><BODY>\n<div id=\"main\">\n");
                     if (words>2) {
                         //scan_troff(wordlist[2], 1, NULL);
                     } else ;
@@ -3319,12 +3332,12 @@ static void
 error_page(char *s, char *t, ...) {
     va_list p;
 
-    printf("<HTML><HEAD><TITLE>%s</TITLE></HEAD>\n"
-           "<BODY>\n<H1>%s</H1>\n", s, s);
+    printf("<html><head><TITLE>%s</TITLE></head>\n"
+           "<body>\n<div id=\"main\">\n<H1>%s</H1>\n", s, s);
     va_start(p, t);
     vfprintf(stdout, t, p);
     va_end(p);
-    printf("</BODY></HTML>\n");
+    printf("</div></div>\n</body></html>\n");
     exit(0);
 }
 
@@ -3545,8 +3558,9 @@ main(int argc, char **argv) {
         //printf("%s", manidx);
         //if (subs) printf("</DL>\n");
         //printf("</DL>\n");
-        //print_sig();
-        printf("</BODY>\n</HTML>\n");
+        printf("</div></div>\n");
+        print_sig();
+        printf("</body>\n</HTML>\n");
     } else {
         if (!filename)
             filename = fname;

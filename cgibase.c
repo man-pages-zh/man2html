@@ -27,10 +27,10 @@ static int current_html_style = 0;
  * and uses lynx, and we use lynxcgi:/home/httpd/cgi-bin.
  */
 
-static char *man2htmlpath = "/cgi-bin/man/man2html"; 	/* default */
+static char *man2htmlpath = "man"; 	/* default */
 static char *cgibase_format = "http://%s"; 		/* host.domain:port */
 static char *cgibase_ll_format = "lynxcgi:%s"; 		/* directory */
-static char *cgibase = "http://localhost";		/* default */
+static char *cgibase = "http://man-pages-zh.github.io";		/* default */
 
 /*
  * Separator between URL and argument string.
@@ -79,11 +79,11 @@ set_current_html_links(void) {
 }
 
 /* What shall we say in case of relat_html_style? */
-static char *signature = "<HR>\n"
+static char *signature = "<hr>\n"
                          "This document was created by\n"
-                         "<A HREF=\"http://github.com/hamano/man2html/\">man2html</A>,\n"
-                         "using the manual pages.<BR>\n"
-                         "%s\n";
+                         "<a href=\"http://github.com/man-pages-zh/man2html/\">man2html</A>,\n"
+                         "using the manual pages.<br>\n"
+                         "%s";
 
 #define TIMEFORMAT "%T GMT, %B %d, %Y"
 #define TIMEBUFSZ	500
@@ -135,8 +135,8 @@ man_page_html(char *sec, char *h) {
             printf("<A HREF=\"%s%s%c%s\">%s</A>",
                    cgibase, man2htmlpath, sep, h, h);
         else
-            printf("<A HREF=\"%s%s%c%s+%s\">%s</A>",
-                   cgibase, man2htmlpath, sep, sec, h, h);
+            printf("<A HREF=\"../man%s/%s.html\">%s</A>",
+                   sec, h, h);
     }
 }
 
