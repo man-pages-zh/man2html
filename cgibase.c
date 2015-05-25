@@ -135,8 +135,8 @@ man_page_html(char *sec, char *h) {
             printf("<A HREF=\"%s%s%c%s\">%s</A>",
                    cgibase, man2htmlpath, sep, h, h);
         else
-            printf("<A HREF=\"../man%s/%s.html\">%s</A>",
-                   sec, h, h);
+            printf("<A HREF=\"../man%s/%s.%s.html\">%s</A>",
+                   sec, h, sec, h);
     }
 }
 
