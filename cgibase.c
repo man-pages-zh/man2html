@@ -1,5 +1,5 @@
 /*
- * Here are the routines of man2html that output a HREF string.
+ * Here are the routines of man2html that output a href string.
  */
 
 #include <stdlib.h>
@@ -81,7 +81,7 @@ set_current_html_links(void) {
 /* What shall we say in case of relat_html_style? */
 static char *signature = "<hr>\n"
                          "This document was created by\n"
-                         "<a href=\"http://github.com/man-pages-zh/man2html/\">man2html</A>,\n"
+                         "<a href=\"http://github.com/man-pages-zh/man2html/\">man2html</a>,\n"
                          "using the manual pages.<br>\n"
                          "%s";
 
@@ -108,54 +108,54 @@ void print_sig()
 
 void
 include_file_html(char *g) {
-    printf("<A HREF=\"file:/usr/include/%s\">%s</A>&gt;", g,g);
+    printf("<a href=\"file:/usr/include/%s\">%s</a>&gt;", g,g);
 }
 
 void
 man_page_html(char *sec, char *h) {
     if (current_html_style) {
         if (!h)
-            printf("<A HREF=\"./\">"
-                   "Return to Main Contents</A>");
+            printf("<a href=\"./\">"
+                   "Return to Main Contents</a>");
         else
-            printf("<A HREF=\"./%s.html\">%s</A>",
+            printf("<a href=\"./%s.html\">%s</a>",
                    h, h);
     } else if (relat_html_style) {
         if (!h)
-            printf("<A HREF=\"../index.html\">"
-                   "Return to Main Contents</A>");
+            printf("<a href=\"../index.html\">"
+                   "Return to Main Contents</a>");
         else
-            printf("<A HREF=\"../man%s/%s.%s.html\">%s</A>",
+            printf("<a href=\"../man%s/%s.%s.html\">%s</a>",
                    sec, h, sec, h);
     } else {
         if (!h)
-            printf("<A HREF=\"%s%s\">Return to Main Contents</A>",
+            printf("<a href=\"%s%s\">Return to Main Contents</a>",
                    cgibase, man2htmlpath);
         else if (!sec)
-            printf("<A HREF=\"%s%s%c%s\">%s</A>",
+            printf("<a href=\"%s%s%c%s\">%s</a>",
                    cgibase, man2htmlpath, sep, h, h);
         else
-            printf("<A HREF=\"../man%s/%s.%s.html\">%s</A>",
+            printf("<a href=\"../man%s/%s.%s.html\">%s</a>",
                    sec, h, sec, h);
     }
 }
 
 void
 ftp_html(char *f) {
-    printf("<A HREF=\"ftp://%s\">%s</A>", f, f);
+    printf("<a href=\"ftp://%s\">%s</a>", f, f);
 }
 
 void
 www_html(char *f) {
-    printf("<A HREF=\"http://%s\">%s</A>", f, f);
+    printf("<a href=\"http://%s\">%s</a>", f, f);
 }
 
 void
 mailto_html(char *g) {
-    printf("<A HREF=\"mailto:%s\">%s</A>", g, g);
+    printf("<a href=\"mailto:%s\">%s</a>", g, g);
 }
 
 void
 url_html(char *g) {
-    printf("<A HREF=\"%s\">%s</A>", g, g);
+    printf("<a href=\"%s\">%s</a>", g, g);
 }

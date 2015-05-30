@@ -458,8 +458,8 @@ Bug 2: incorrect font: after the .IP things are roman again.
 #define FC1 "</I>"
 #define FO2 "<B>"
 #define FC2 "</B>"
-#define FO3 "<TT>"
-#define FC3 "</TT>"
+#define FO3 "<tt>"
+#define FC3 "</tt>"
 
 char *switchfont[16] = { ""     , FC0 FO1, FC0 FO2, FC0 FO3,
                          FC1 FO0, ""     , FC1 FO2, FC1 FO3,
@@ -747,7 +747,7 @@ scan_escape(char *c) {
         intresult=j;
         break;
     case 'l':
-        h="<HR>";
+        h="<hr />";
         curpos=0;
     case 'b':
     case 'v':
@@ -780,7 +780,7 @@ scan_escape(char *c) {
         h="";
         break;
     case 'p':
-        h="<BR>\n";
+        h="<br />\n";
         curpos=0;
         break;
     case 't':
@@ -1047,7 +1047,7 @@ scan_table(char *c) {
     out_html(change_to_size(0));
     if (!fillout) {
         fillout=1;
-        out_html("</PRE>");
+        out_html("</pre>");
     }
     while (*h && *h!='\n') h++;
     if (h[-1]==';') {
@@ -1242,19 +1242,19 @@ scan_table(char *c) {
         currow=currow->prev;
     }
     /* produce html output */
-    if (center) out_html("<CENTER>");
-    if (box==2) out_html("<TABLE BORDER><TR><TD>");
-    out_html("<TABLE");
+    if (center) out_html("<center>");
+    if (box==2) out_html("<table BORDER><tr><td>");
+    out_html("<table");
     if (box || border) {
         out_html(" BORDER");
-        if (!border) out_html("><TR><TD><TABLE");
+        if (!border) out_html("><tr><td><table");
         if (expand) out_html(" WIDTH=100%");
     }
     out_html(">\n");
     currow=layout;
     while (currow) {
         j=0;
-        out_html("<TR VALIGN=top>");
+        out_html("<tr VALIGN=top>");
         curfield=currow->first;
         while (curfield) {
             if (curfield->align!='S' && curfield->align!='^') {
@@ -1290,10 +1290,10 @@ scan_table(char *c) {
                 if (curfield->font) out_html(change_to_font(curfield->font));
                 switch (curfield->align) {
                 case '=':
-                    out_html("<HR><HR>");
+                    out_html("<hr /><hr />");
                     break;
                 case '_':
-                    out_html("<HR>");
+                    out_html("<hr />");
                     break;
                 default:
                     if (curfield->contents) out_html(curfield->contents);
@@ -1304,20 +1304,20 @@ scan_table(char *c) {
                 if (curfield->font) out_html(change_to_font(0));
                 if (curfield->size) out_html(change_to_size(0));
                 if (j>=maxcol && curfield->align>'@' && curfield->align!='_')
-                    out_html("<BR>");
-                out_html("</TD>");
+                    out_html("<br />");
+                out_html("</td>");
             }
             curfield=curfield->next;
         }
-        out_html("</TR>\n");
+        out_html("</tr>\n");
         currow=currow->next;
     }
-    if (box && !border) out_html("</TABLE>");
-    out_html("</TABLE>");
-    if (box==2) out_html("</TABLE>");
-    if (center) out_html("</CENTER>\n");
+    if (box && !border) out_html("</table>");
+    out_html("</table>");
+    if (box==2) out_html("</table>");
+    if (center) out_html("</center>\n");
     else out_html("\n");
-    if (!oldfillout) out_html("<PRE>");
+    if (!oldfillout) out_html("<pre>");
     fillout=oldfillout;
     out_html(change_to_size(oldsize));
     out_html(change_to_font(oldfont));
@@ -1729,7 +1729,7 @@ add_to_index(int level, char *item)
 
     scan_troff(item, 1, &c);
     manidx_need(100 + strlen(c));
-    sprintf(manidx+mip, "<DT><A HREF=\"#%s\">%s</A></DT><DD>\n", label, c);
+    sprintf(manidx+mip, "<DT><a href=\"#%s\">%s</a></DT><DD>\n", label, c);
     if (c) free(c);
     while (manidx[mip]) mip++;
 }
@@ -1889,7 +1889,7 @@ scan_request(char *c) {
         break;
         case V('b','r'):
             if (still_dd) out_html("</DT><DD>");
-            else out_html("<BR>\n");
+            else out_html("<br />\n");
             curpos=0;
             c=c+j;
             if (c[0] == escapesym) {
@@ -1928,17 +1928,17 @@ scan_request(char *c) {
             c=skip_till_newline(c);
             /* center next i lines */
             if (i>0) {
-                out_html("<CENTER>\n");
+                out_html("<center>\n");
                 while (i && *c) {
                     char *line=NULL;
                     c=scan_troff(c,1, &line);
-                    if (line && strncmp(line, "<BR>", 4)) {
+                    if (line && strncmp(line, "<br />", 4)) {
                         out_html(line);
-                        out_html("<BR>\n");
+                        out_html("<br />\n");
                         i--;
                     }
                 }
-                out_html("</CENTER>\n");
+                out_html("</center>\n");
                 curpos=0;
             }
             break;
@@ -1971,7 +1971,7 @@ scan_request(char *c) {
             if (!fillout) {
                 out_html(change_to_font(0));
                 out_html(change_to_size('0'));
-                out_html("</PRE>\n");
+                out_html("</pre>\n");
             }
             curpos=0;
             fillout=1;
@@ -2047,7 +2047,7 @@ scan_request(char *c) {
             if (fillout) {
                 out_html(change_to_font(0));
                 out_html(change_to_size('0'));
-                out_html("<PRE>\n");
+                out_html("<pre>\n");
             }
             curpos=0;
             fillout=0;
@@ -2123,9 +2123,9 @@ scan_request(char *c) {
                 fprintf(stderr, "ln -s %s.html %s.html\n", h, t);
                 s=strrchr(t, '.');
                 if (!s) s=t;
-                printf("<HTML><HEAD><TITLE> Manpage of %s</TITLE>\n"
+                printf("<html><head><title> Manpage of %s</title>\n"
                        "</head><body>\n<div id=\"main\">\n"
-                       "See the manpage for <A HREF=\"%s.html\">%s</A>.\n"
+                       "See the manpage for <a href=\"%s.html\">%s</a>.\n"
                        "</div>\n</body></html>\n",
                        s, h, h);
             } else
@@ -2135,10 +2135,10 @@ scan_request(char *c) {
                 if (!l || !(f = fopen(h,"r"))) {
                     fprintf(stderr,
                             "man2html: unable to open or read file %s\n", h);
-                    out_html("<BLOCKQUOTE>"
+                    out_html("<blockquote>"
                              "man2html: unable to open or read file\n");
                     out_html(h);
-                    out_html("</BLOCKQUOTE>\n");
+                    out_html("</blockquote>\n");
                 } else {
                     i=fread(buf+1,1,l,f);
                     fclose(f);
@@ -2169,7 +2169,7 @@ scan_request(char *c) {
 #if 0
             dl_down();
 #endif
-            out_html("<BR>\n");
+            out_html("<br />\n");
             c=c+j;
             c=scan_expression(c, &j);
             for (i=0; i<j; i++) out_html("&nbsp;");
@@ -2293,18 +2293,18 @@ scan_request(char *c) {
                 fprintf(idxfile,"\n");
             }
 #endif
-            out_html("<A NAME=\"");
+            out_html("<a name=\"");
             out_html(idxlabel);
             /* this will not work in mosaic (due to a bug).
             ** Adding '&nbsp;' between '>' and '<' solves it, but creates
             ** some space. A normal space does not work.
             */
-            out_html("\"></A>");
+            out_html("\"></a>");
             break;
         case V('L','P'):
         case V('P','P'):
             dl_end();
-            if (fillout) out_html("<P>\n");
+            if (fillout) out_html("<p>\n");
             else {
                 out_html(NEWLINE);
                 NEWLINE[0]='\n';
@@ -2369,7 +2369,7 @@ sh_below:
             out_html(change_to_size(0));
             if (!fillout) {
                 fillout=1;
-                out_html("</PRE>");
+                out_html("</pre>");
             }
             trans_char(c,'"', '\a');
             add_to_index(mode, c);
@@ -2400,17 +2400,17 @@ sh_below:
                 *sl = 0;
                 if (words > 1) {
                     output_possible=1;
-                    out_html("<HTML><HEAD><TITLE>Manpage of ");
+                    out_html("<html><head><title>Manpage of ");
                     out_html(wordlist[0]);
-                    out_html("</TITLE>\n");
-                    out_html("<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">\n");
+                    out_html("</title>\n");
+                    out_html("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
                     out_html(css);
-                    out_html("</HEAD><BODY>\n<div id=\"main\">\n");
+                    out_html("</head><body>\n<div id=\"main\">\n");
                     if (words>2) {
                         //scan_troff(wordlist[2], 1, NULL);
                     } else ;
                     *sl='\n';
-                    if (mandoc_command) out_html("<BR>BSD mandoc<BR>");
+                    if (mandoc_command) out_html("<br />BSD mandoc<br />");
                 }
                 c = sl+1;
             } else
@@ -2667,12 +2667,12 @@ sh_below:
         case V('D','l'):	/* BSD mandoc */
             c=c+j;
             out_html(NEWLINE);
-            out_html("<BLOCKQUOTE>");
+            out_html("<blockquote>");
             out_html(change_to_font('L'));
             if (*c == '\n') c++;
             c=scan_troff_mandoc(c, 1, NULL);
             out_html(change_to_font('R'));
-            out_html("</BLOCKQUOTE>");
+            out_html("</blockquote>");
             if (fillout) curpos++;
             else curpos=0;
             break;
@@ -2689,14 +2689,14 @@ sh_below:
             mandoc_bd_options = 0; /* Remember options for terminating Bl */
             if (strstr(c, "-offset indent")) {
                 mandoc_bd_options |= BD_INDENT;
-                out_html("<BLOCKQUOTE>\n");
+                out_html("<blockquote>\n");
             }
             if (strstr(c, "-literal") || strstr(c, "-unfilled")) {
                 if (fillout) {
                     mandoc_bd_options |= BD_LITERAL;
                     out_html(change_to_font(0));
                     out_html(change_to_size('0'));
-                    out_html("<PRE>\n");
+                    out_html("<pre>\n");
                 }
                 curpos=0;
                 fillout=0;
@@ -2711,11 +2711,11 @@ sh_below:
                 if (!fillout) {
                     out_html(change_to_font(0));
                     out_html(change_to_size('0'));
-                    out_html("</PRE>\n");
+                    out_html("</pre>\n");
                 }
             }
             if (mandoc_bd_options & BD_INDENT)
-                out_html("</BLOCKQUOTE>\n");
+                out_html("</blockquote>\n");
             curpos=0;
             fillout=1;
             c=skip_till_newline(c);
@@ -2945,7 +2945,7 @@ sh_below:
                  */
                 static int count = 0; /* Don't break on the first Nm */
                 if (count) {
-                    out_html("<BR>");
+                    out_html("<br />");
                 } else {
                     char *end, t=0 /* just for gcc */;
                     end = strchr(c, '\n');
@@ -3212,13 +3212,13 @@ scan_troff(char *c, int san, char **result) {   /* san : stop at newline */
             case '\n':
                 if (h[-1] == '\n' && fillout) {
                     intbuff[ibp++]='<';
-                    intbuff[ibp++]='P';
+                    intbuff[ibp++]='p';
                     intbuff[ibp++]='>';
                 }
                 if (contained_tab && fillout) {
                     intbuff[ibp++]='<';
-                    intbuff[ibp++]='B';
-                    intbuff[ibp++]='R';
+                    intbuff[ibp++]='b';
+                    intbuff[ibp++]='r';
                     intbuff[ibp++]='>';
                 }
                 contained_tab=0;
@@ -3245,12 +3245,12 @@ scan_troff(char *c, int san, char **result) {   /* san : stop at newline */
                             curpos++;
                         }
                     } else {
-                        out_html("<TT>");
+                        out_html("<tt>");
                         while (curpos < tabstops[curtab]) {
                             out_html("&nbsp;");
                             curpos++;
                         }
-                        out_html("</TT>");
+                        out_html("</tt>");
                     }
                 }
             }
@@ -3259,7 +3259,7 @@ scan_troff(char *c, int san, char **result) {   /* san : stop at newline */
                 if (*h == ' ' && (h[-1] == '\n' || usenbsp)) {
                     FLUSHIBP;
                     if (!usenbsp && fillout) {
-                        out_html("<BR>");
+                        out_html("<br />");
                         curpos=0;
                     }
                     usenbsp=fillout;
@@ -3332,8 +3332,8 @@ static void
 error_page(char *s, char *t, ...) {
     va_list p;
 
-    printf("<html><head><TITLE>%s</TITLE></head>\n"
-           "<body>\n<div id=\"main\">\n<H1>%s</H1>\n", s, s);
+    printf("<html><head><title>%s</title></head>\n"
+           "<body>\n<div id=\"main\">\n<h1>%s</h1>\n", s, s);
     va_start(p, t);
     vfprintf(stdout, t, p);
     va_end(p);
@@ -3548,19 +3548,19 @@ main(int argc, char **argv) {
     out_html(change_to_size(0));
     if (!fillout) {
         fillout=1;
-        out_html("</PRE>");
+        out_html("</pre>");
     }
     out_html(NEWLINE);
     if (output_possible) {
         /* &nbsp; for mosaic users */
-        //printf("<HR>\n<A NAME=\"index\">&nbsp;</A><H2>Index</H2>\n<DL>\n");
+        //printf("<hr />\n<a NAME=\"index\">&nbsp;</a><H2>Index</H2>\n<DL>\n");
         //manidx[mip]=0;
         //printf("%s", manidx);
         //if (subs) printf("</DL>\n");
         //printf("</DL>\n");
         printf("</div></div>\n");
         print_sig();
-        printf("</body>\n</HTML>\n");
+        printf("</body>\n</html>\n");
     } else {
         if (!filename)
             filename = fname;
@@ -3569,7 +3569,7 @@ main(int argc, char **argv) {
                        "The requested file %s is not a valid (unformatted) "
                        "man page.\nIf the file is a formatted manpage, "
                        "you could try to load the\n"
-                       "<A HREF=\"file://localhost%s\">plain file</A>.\n",
+                       "<a href=\"file://localhost%s\">plain file</a>.\n",
                        filename, filename);
         else
             error_page("Invalid Manpage",
