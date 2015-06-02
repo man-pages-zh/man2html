@@ -43,39 +43,39 @@ static char sep = '?';					/* or '/' */
 
 void
 set_separator(char s) {
-     sep = s;
+    sep = s;
 }
 
 void
 set_lynxcgibase(char *s) {
-     int n = strlen(cgibase_ll_format) + strlen(s);
-     char *t = (char *) xmalloc(n);
+    int n = strlen(cgibase_ll_format) + strlen(s);
+    char *t = (char *) xmalloc(n);
 
-     sprintf(t, cgibase_ll_format, s);
-     cgibase = t;
+    sprintf(t, cgibase_ll_format, s);
+    cgibase = t;
 }
 
 void
 set_cgibase(char *s) {
-     int n = strlen(cgibase_format) + strlen(s);
-     char *t = (char *) xmalloc(n);
+    int n = strlen(cgibase_format) + strlen(s);
+    char *t = (char *) xmalloc(n);
 
-     sprintf(t, cgibase_format, s);
-     cgibase = t;
+    sprintf(t, cgibase_format, s);
+    cgibase = t;
 }
 
 void
 set_man2htmlpath(char *s) {
-     man2htmlpath = xstrdup(s);
+    man2htmlpath = xstrdup(s);
 }
 
 void
 set_relative_html_links(void) {
-     relat_html_style = 1;
+    relat_html_style = 1;
 }
 void
 set_current_html_links(void) {
-     current_html_style = 1;
+    current_html_style = 1;
 }
 
 /* What shall we say in case of relat_html_style? */
@@ -108,54 +108,54 @@ void print_sig()
 
 void
 include_file_html(char *g) {
-     printf("<A HREF=\"file:///usr/include/%s\">%s</A>&gt;", g,g);
+    printf("<A HREF=\"file:///usr/include/%s\">%s</A>&gt;", g,g);
 }
 
 void
 man_page_html(char *sec, char *h) {
-	if (current_html_style) {
-		if (!h)
-			printf("<A HREF=\"./\">"
-			       "Return to Main Contents</A>");
-		else
-			printf("<A HREF=\"./%s.html\">%s</A>",
-			       h, h);
-	} else if (relat_html_style) {
-		if (!h)
-			printf("<A HREF=\"../index.html\">"
-			       "Return to Main Contents</A>");
-		else
-			printf("<A HREF=\"../man%s/%s.%s.html\">%s</A>",
-			       sec, h, sec, h);
-	} else {
-		if (!h)
-			printf("<A HREF=\"%s%s\">Return to Main Contents</A>",
-			       cgibase, man2htmlpath);
-		else if (!sec)
-			printf("<A HREF=\"%s%s%c%s\">%s</A>",
-			       cgibase, man2htmlpath, sep, h, h);
-		else
-			printf("<A HREF=\"%s%s%c%s+%s\">%s</A>",
-			       cgibase, man2htmlpath, sep, sec, h, h);
-	}
+    if (current_html_style) {
+        if (!h)
+            printf("<A HREF=\"./\">"
+                    "Return to Main Contents</A>");
+        else
+            printf("<A HREF=\"./%s.html\">%s</A>",
+                    h, h);
+    } else if (relat_html_style) {
+        if (!h)
+            printf("<A HREF=\"../index.html\">"
+                    "Return to Main Contents</A>");
+        else
+            printf("<A HREF=\"../man%s/%s.%s.html\">%s</A>",
+                    sec, h, sec, h);
+    } else {
+        if (!h)
+            printf("<A HREF=\"%s%s\">Return to Main Contents</A>",
+                    cgibase, man2htmlpath);
+        else if (!sec)
+            printf("<A HREF=\"%s%s%c%s\">%s</A>",
+                    cgibase, man2htmlpath, sep, h, h);
+        else
+            printf("<A HREF=\"%s%s%c%s+%s\">%s</A>",
+                    cgibase, man2htmlpath, sep, sec, h, h);
+    }
 }
 
 void
 ftp_html(char *f) {
-     printf("<A HREF=\"ftp://%s\">%s</A>", f, f);
+    printf("<A HREF=\"ftp://%s\">%s</A>", f, f);
 }
 
 void
 www_html(char *f) {
-     printf("<A HREF=\"http://%s\">%s</A>", f, f);
+    printf("<A HREF=\"http://%s\">%s</A>", f, f);
 }
 
 void
 mailto_html(char *g) {
-     printf("<A HREF=\"mailto:%s\">%s</A>", g, g);
+    printf("<A HREF=\"mailto:%s\">%s</A>", g, g);
 }
 
 void
 url_html(char *g) {
-     printf("<A HREF=\"%s\">%s</A>", g, g);
+    printf("<A HREF=\"%s\">%s</A>", g, g);
 }

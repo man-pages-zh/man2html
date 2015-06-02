@@ -286,7 +286,7 @@ static STRDEF standardchar[] = {
     { V('~','o'), 1, "&otilde;", NULL },
     { 0, 0, NULL, NULL  }
 
-    
+
 };
 
 void stdinit(void) {
@@ -296,33 +296,33 @@ void stdinit(void) {
     stdf = &standardchar[0];
     i = 0;
     while (stdf->nr) {
-	if (stdf->st) stdf->st = xstrdup(stdf->st);
-	stdf->next = &standardchar[i];
-	stdf = stdf->next;
-	i++;
+        if (stdf->st) stdf->st = xstrdup(stdf->st);
+        stdf->next = &standardchar[i];
+        stdf = stdf->next;
+        i++;
     }
     chardef=&standardchar[0];
 
     stdf=&standardstring[0];
     i=0;
     while (stdf->nr) {
-	 /* waste a little memory, and make a copy, to avoid
-	    the segfault when we free non-malloced memory */
-	if (stdf->st) stdf->st = xstrdup(stdf->st);
-	stdf->next = &standardstring[i];
-	stdf = stdf->next;
-	i++;
+        /* waste a little memory, and make a copy, to avoid
+           the segfault when we free non-malloced memory */
+        if (stdf->st) stdf->st = xstrdup(stdf->st);
+        stdf->next = &standardstring[i];
+        stdf = stdf->next;
+        i++;
     }
     strdef=&standardstring[0];
 
     intdef=&standardint[0];
     i=0;
     while (intdef->nr) {
-	if (intdef->nr == NROFF) intdef->nr = nroff; else
-	if (intdef->nr == TROFF) intdef->nr = !nroff;
-	intdef->next = &standardint[i];
-	intdef = intdef->next;
-	i++;
+        if (intdef->nr == NROFF) intdef->nr = nroff; else
+            if (intdef->nr == TROFF) intdef->nr = !nroff;
+        intdef->next = &standardint[i];
+        intdef = intdef->next;
+        i++;
     }
     intdef = &standardint[0];
     defdef = NULL;
@@ -331,20 +331,20 @@ void stdinit(void) {
 
 LONGSTRDEF* find_longstrdef(LONGSTRDEF * head, int nr, char * longname, char ** out_longname)
 {
-	char *p, c;
-	LONGSTRDEF *de;
-	
-	p = longname;
-	while (p && !isspace(*p)) p++;
-	c = *p;
-	*p = 0;
+    char *p, c;
+    LONGSTRDEF *de;
 
-	de = head;
-	while (de && (de->nr != nr || (de->longname && strcmp(longname, de->longname))))
-		de = de->next;
+    p = longname;
+    while (p && !isspace(*p)) p++;
+    c = *p;
+    *p = 0;
 
-	if (out_longname)
-		*out_longname = de ? de->longname : xstrdup(longname);
-	*p = c;
-	return de;
+    de = head;
+    while (de && (de->nr != nr || (de->longname && strcmp(longname, de->longname))))
+        de = de->next;
+
+    if (out_longname)
+        *out_longname = de ? de->longname : xstrdup(longname);
+    *p = c;
+    return de;
 }
