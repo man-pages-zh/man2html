@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([man2html], [0.1], [https://github.com/man-pages-zh/man2html/], [man2html])
+AC_INIT([man2html], [1.6f-1], [https://github.com/man-pages-zh/man2html/], [man2html])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([defs.h])
 AC_CONFIG_HEADERS([config.h])
