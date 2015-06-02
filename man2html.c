@@ -14,6 +14,9 @@
 
 /* some code added by Tsukasa Hamnao. */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -24,7 +27,7 @@
 #include <stdbool.h>
 #include "defs.h"
 
-static char version[] = "1.6f-1";
+static char version[] = VERSION;
 
 static char *css = "<link rel=\"stylesheet\" href=\"../css/style.css\" type=\"text/css\">\n";
 
@@ -3553,7 +3556,7 @@ main(int argc, char **argv) {
     out_html(NEWLINE);
     if (output_possible) {
         /* &nbsp; for mosaic users */
-        //printf("<hr />\n<a NAME=\"index\">&nbsp;</a><H2>Index</H2>\n<DL>\n");
+        //printf("<hr />\n<a NAME=\"index\">&nbsp;</a><h2>Index</h2>\n<DL>\n");
         //manidx[mip]=0;
         //printf("%s", manidx);
         //if (subs) printf("</DL>\n");
