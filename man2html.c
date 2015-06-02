@@ -463,9 +463,10 @@ static inline void
 dl_begin(void) {
     if (itemdepth < SIZE(dl_set) && dl_set[itemdepth] == noDL) {
         out_html(dl_open[DL]);
+        out_html("<DT>");
         dl_set[itemdepth]=DL;
-    }
-    out_html("<DT>");
+    } else {
+        out_html("</DD><DT>");
 }
 
 static inline void
@@ -473,6 +474,7 @@ dl_end(void) {
     if (itemdepth < SIZE(dl_set)) {
         int type = dl_set[itemdepth];
         if (type == DL) {
+            out_html("</DD>");
             out_html(dl_close[type]);
             dl_set[itemdepth]=noDL;
         }
@@ -1651,7 +1653,7 @@ add_to_index(int level, char *item)
 
     scan_troff(item, 1, &c);
     manidx_need(100 + strlen(c));
-    sprintf(manidx+mip, "<DT><A HREF=\"#%s\">%s</A><DD>\n", label, c);
+    sprintf(manidx+mip, "<DT><A HREF=\"#%s\">%s</A></DT><DD>\n", label, c);
     if (c) free(c);
     while (manidx[mip]) mip++;
 }
@@ -1838,7 +1840,7 @@ scan_request(char *c) {
                 }
                 break;
             case V('b','r'):
-                if (still_dd) out_html("<DD>");
+                if (still_dd) out_html("</DT><DD>");
                 else out_html("<BR>\n");
                 curpos=0;
                 c=c+j;
@@ -2167,16 +2169,19 @@ scan_request(char *c) {
                 if (words) {
                     scan_troff(wordlist[0], 1,NULL);
                 }
-                out_html("<DD>");
+                out_html("</DT><DD>");
                 curpos = 0;
                 break;
             case V('T','P'):
                 dl_begin();
                 c=skip_till_newline(c);
                 /* somewhere a definition ends with '.TP' */
-                if (!*c) still_dd=1; else {
+                if (!*c) {
+                    still_dd = 1;
+                    out_html("</DT>");
+                } else {
                     c=scan_troff(c,1,NULL);
-                    out_html("<DD>");
+                    out_html("</DT><DD>");
                 }
                 curpos=0;
                 break;
@@ -2545,10 +2550,12 @@ sh_below:
                     }
                     out_html(change_to_font('R'));
                     out_html(NEWLINE);
-                    if (inXo)
+                    if (inXo) {
                         still_dd = 1;
-                    else
-                        out_html("<DD>");
+                        out_html("</DT>");
+                    } else {
+                        out_html("</DT><DD>");
+                    }
                 } else if (dl_type(UL) || dl_type(OL)) {
                     out_html("<LI>");
                     c=scan_troff_mandoc(c,1,NULL);
@@ -2564,7 +2571,7 @@ sh_below:
                 c=c+j;
                 if (inXo) {
                     if (still_dd)
-                        out_html("<DD>");
+                        out_html("</DT><DD>");
                     inXo = 0;
                 }
                 break;
@@ -3043,7 +3050,7 @@ scan_troff(char *c, int san, char **result) {   /* san : stop at newline */
             if (h[-1] == '\n' && still_dd && isalnum(*h)) {
                 /* sometimes a .HP request is not followed by a .br request */
                 FLUSHIBP;
-                out_html("<DD>");
+                out_html("</DT><DD>");
                 curpos=0;
                 still_dd=0;
             }
