@@ -79,10 +79,10 @@ set_current_html_links(void) {
 }
 
 /* What shall we say in case of relat_html_style? */
-static char *signature = "<HR>\n"
+static char *signature = "<hr />\n"
 "This document was created by\n"
-"<A HREF=\"http://github.com/hamano/man2html/\">man2html</A>,\n"
-"using the manual pages.<BR>\n"
+"<a href=\"http://github.com/man-pages-zh/man2html/\">man2html</a>,\n"
+"using the manual pages.<br />\n"
 "%s\n";
 
 #define TIMEFORMAT "%T GMT, %B %d, %Y"
