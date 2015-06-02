@@ -1,0 +1,43 @@
+From: Robert Luberda <robert@debian.org>
+Date: Wed, 29 Jan 2003 21:05:37 +0100
+Subject: 000 Makefile.in
+
+Add support for $(DEBIAN_CFLAGS).
+---
+ man2html/Makefile.in | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/man2html/Makefile.in b/man2html/Makefile.in
+index b41eaba..be41984 100644
+--- a/man2html/Makefile.in
++++ b/man2html/Makefile.in
+@@ -1,11 +1,12 @@
+-CC = @CC@
+-CFLAGS += -Wall -Wstrict-prototypes -Wmissing-prototypes
++CFLAGS += -Wall -Wstrict-prototypes -Wmissing-prototypes $(DEBIAN_CFLAGS)
+ OBJECTS = man2html.o cgibase.o abbrev.o strdefs.o
+ EXEEXT = @EXEEXT@
+ bindir = $(DESTDIR)$(PREFIX)/usr/bin
+ mandir = $(DESTDIR)$(PREFIX)@mandir@
+ vardir = $(DESTDIR)$(PREFIX)/var
+ httpdir = $(DESTDIR)$(PREFIX)/home/httpd
++cgidir = $(DESTDIR)$(PREFIX)/usr/lib/cgi-bin/man
++sharedir = $(DESTDIR)$(PREFIX)/usr/share/man2html
+ cgiowner = nobody
+ cgigroup = nobody
+ 
+@@ -29,10 +30,10 @@ install-scripts: install-man-scripts install-glimpse-stuff install-hman
+ #   http://localhost/cgi-bin/man/man2html
+ # to work.
+ install-man-scripts:
+-	mkdir -p $(httpdir)/cgi-bin/man
+-	mkdir -p $(httpdir)/cgi-aux/man
+-	install -m 755 scripts/cgi-bin/man/* $(httpdir)/cgi-bin/man
+-	install -m 644 scripts/cgi-aux/man/* $(httpdir)/cgi-aux/man
++	mkdir -p $(cgidir)
++	mkdir -p $(sharedir)
++	install -m 755 scripts/cgi-bin/man/* $(cgidir)
++	install -m 644 scripts/cgi-aux/man/* $(sharedir)
+ 	install -d -o $(cgiowner) -g $(cgigroup) -m 775 $(vardir)/man2html
+ # (aux was renamed to cgi-aux since aux causes problems under DOS)
+ 

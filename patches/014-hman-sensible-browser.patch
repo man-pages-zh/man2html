@@ -1,0 +1,54 @@
+From: Robert Luberda <robert@debian.org>
+Date: Sat, 8 Feb 2003 08:56:14 +0100
+Subject: 014 hman sensible browser
+
+Use sensible-browser if lynx can't be found.
+---
+ man2html/hman.1  | 8 +++++++-
+ man2html/hman.sh | 7 ++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/man2html/hman.1 b/man2html/hman.1
+index 4676f55..d2293bf 100644
+--- a/man2html/hman.1
++++ b/man2html/hman.1
+@@ -39,7 +39,12 @@ This option overrides the
+ .B MANHTMLPAGER
+ environment variable.
+ The default is the non-httpd version of
+-.BR lynx .
++.BR lynx ,
++or
++.BR sensible-browser
++if 
++.B lynx
++cannot be found.
+ .TP
+ .B \-\^H " host"
+ Specify from what host to get the man pages.
+@@ -62,6 +67,7 @@ The default host to use is selected using this environment variable.
+ .BR man2html (1),
+ .BR arena (1),
+ .BR lynx (1),
++.BR sensible-browser (1),
+ .BR netscape (1),
+ .BR xmosaic (1),
+ .BR glimpse (1)
+diff --git a/man2html/hman.sh b/man2html/hman.sh
+index 12147ea..b5e2dc6 100755
+--- a/man2html/hman.sh
++++ b/man2html/hman.sh
+@@ -24,7 +24,12 @@ fi
+ 
+ # The user has to set MANHTMLPAGER (or he will get httpd-free lynx).
+ # Pick your favorite browser: lynx, xmosaic, netscape, arena, amaya, grail, ...
+-HMAN_BROWSER=${MANHTMLPAGER-lynxcgi}
++if [ x"$MANHTMLPAGER" = x ]  && ! which lynx > /dev/null ; then
++	HMAN_BROWSER=sensible-browser
++else
++	HMAN_BROWSER=${MANHTMLPAGER-lynxcgi}
++fi
++
+ #
+ # If the man pages are on a remote host, specify it in MANHTMLHOST.
+ HOST=${MANHTMLHOST-localhost}

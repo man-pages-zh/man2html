@@ -1,0 +1,23 @@
+From: =?utf-8?q?Nicolas_Fran=C3=A7ois?= <nicolas.francois@centraliens.net>
+Date: Tue, 18 Apr 2006 21:53:27 +0200
+Subject: 021 man2html perl_modules
+
+Add support for Perl modules (closes: #363384).
+---
+ man2html/man2html.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/man2html/man2html.c b/man2html/man2html.c
+index 167a2bb..9d6d347 100644
+--- a/man2html/man2html.c
++++ b/man2html/man2html.c
+@@ -173,7 +173,8 @@ add_links(char *c)
+                                 /* section is n or l or starts with a digit */
+ 		  && strchr("123456789nl", f[1])
+ 		  && (g-f == 2 || (g-f == 3 && isdigit(f[1]) && isalpha(f[2]))
+-		               || (f[2] == 'X' && isdigit(f[1])))
++		               || (f[2] == 'X' && isdigit(f[1]))
++		               || (strncmp(f+1,"3pm",g-f-1) == 0))
+ 	       ) {
+ 		/* this might be a link */
+ 		h=f-1;
