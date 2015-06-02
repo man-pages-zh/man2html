@@ -1,4 +1,16 @@
-*.o
 *~
+aclocal.m4
+autom4te.cache/
+build-aux/
+config.h.in
+config.log
+config.status
+configure
+.deps/
 hman
+Makefile
+Makefile.in
 man2html
+man2html*.tar.gz
+*.o
+stamp-h1
