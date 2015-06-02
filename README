@@ -89,3 +89,12 @@ must be all on one line):
       /usr/X11R6/man/man* /usr/local/man/man* /opt/man/man* ;
       chmod +r /var/man2html/.glimpse*
 --------------------------------------------------------------------------
+
+## Developments after fork ##
+
+The fork of man-pages-zh/man2html mainly aims at forming contemporary,
+semantic
+and well-structed HTML documents, and we are dropping outdated CGI support.
+
+We are using Autotools now. The old build script can still be found at
+Makefile.in.OLD and Makefile.OLD.

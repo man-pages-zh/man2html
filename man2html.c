@@ -14,18 +14,23 @@
 
 /* some code added by Tsukasa Hamnao. */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <errno.h>
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
 #include <sys/stat.h>
 #include <stdbool.h>
 #include "defs.h"
-//#include "../src/version.h"
-static char version[] = "1.6f-1";
+
+static char version[] = VERSION;
+
+static char *css = "<link rel=\"stylesheet\" href=\"../css/style.css\" type=\"text/css\">\n";
+static char *script = "<script src=\"../js/jquery-2.1.4.min.js\">\n</script><script src=\"../js/collate.js\"></script>";
 
 /* BSD mandoc Bd/Ed example(?) blocks */
 #define BD_LITERAL  1
@@ -2301,7 +2306,7 @@ sh_below:
                 if (mode) {
                     out_html("</h3>\n");
                 } else {
-                    out_html("</h2>\n<div id=\"content\">\n");
+                    out_html("</h2>\n<div class=\"content\">\n");
                 }
                 curpos=0;
                 break;
@@ -2358,6 +2363,7 @@ sh_below:
                         scan_troff(wordlist[1], 0, NULL);
                         */
                         out_html(css);
+                        out_html(script);
                         out_html("</head><body>\n<div id=\"main\">\n");
                         if (words>2) {
                             // scan_troff(wordlist[2], 1, NULL);
