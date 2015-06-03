@@ -40,8 +40,9 @@ static char *script = "<script src=\"../js/jquery-2.1.4.min.js\">\n</script><scr
 #define BD_INDENT   2
 
 #define SIZE(a)	(sizeof(a)/sizeof(*a))
-#define DOCTYPE "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
-#define CONTENTTYPE "Content-type: text/html; charset=UTF-8\n\n"
+#define DOCTYPE "<!DOCTYPE html>\n"
+/*#define CONTENTTYPE "Content-type: text/html; charset=UTF-8\n\n"*/
+#define CONTENTTYPE ""
 
 static char NEWLINE[2]="\n";
 static char idxlabel[6] = "ixAAA";
