@@ -14,6 +14,9 @@
 
 /* some code added by Tsukasa Hamnao. */
 
+/* see feature_test_macros(7) */
+#define _POSIX_C_SOURCE 200809L
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -88,8 +91,8 @@ is_shell_safe(const char *ss, int quoted) {
 static int
 read_manpage_into_buffer(char *path, char **buf) {
     int compressed = 0;
-    FILE * f = NULL;
-    char * ext;
+    FILE *f = NULL;
+    char *ext = NULL;
     int l = 0;
     struct stat stbuf;
 
@@ -170,7 +173,7 @@ read_manpage_into_buffer(char *path, char **buf) {
     return l;
 }
 
-    static char *
+static char *
 expand_char(int nr)
 {
     STRDEF *h;
@@ -196,7 +199,7 @@ expand_char(int nr)
     return charb;
 }
 
-    static char *
+static char *
 expand_string(int nr)
 {
     STRDEF *h;
@@ -219,7 +222,7 @@ static int newline_for_fun=0;
 static int output_possible=0;
 static int out_length=0;
 
-    static void
+static void
 add_links(char *c)
 {
     /*
@@ -474,6 +477,7 @@ dl_begin(void) {
         dl_set[itemdepth]=DL;
     } else {
         out_html("</DD><DT>");
+    }
 }
 
 static inline void
@@ -562,7 +566,7 @@ char *switchfont[16] = { ""     , FC0 FO1, FC0 FO2, FC0 FO3,
     FC2 FO0, FC2 FO1, ""     , FC2 FO3,
     FC3 FO0, FC3 FO1, FC3 FO2, ""      };
 
-    static char *
+static char *
 change_to_font(int nr)
 {
     int i;
@@ -586,7 +590,7 @@ change_to_font(int nr)
 
 static char sizebuf[200];
 
-    static char *
+static char *
 change_to_size(int nr)
 {
     int i;
@@ -984,7 +988,7 @@ static char *scan_format(char *c, TABLEROW **result, int *maxcol)
     return c;
 }
 
-    static TABLEROW *
+static TABLEROW *
 next_row(TABLEROW *tr)
 {
     if (tr->next) {
@@ -1610,15 +1614,18 @@ char *section_list[] = {
     NULL, NULL
 };
 
-    static char *
+static char *
 section_name(char *c)
 {
-    int i=0;
+    int i = 0;
 
     if (!c) return "";
     while (section_list[i] && strcmp(c,section_list[i])) i=i+2;
-    if (section_list[i+1]) return section_list[i+1];
-    else return c;
+    if (section_list[i+1]) {
+        return section_list[i+1];
+    } else {
+        return c;
+    }
 }
 
 int manidxlen = 0;
@@ -1635,7 +1642,7 @@ manidx_need(int m) {
     }
 }
 
-    static void
+static void
 add_to_index(int level, char *item)
 {
     char *c = NULL;
@@ -1660,7 +1667,7 @@ add_to_index(int level, char *item)
 
     scan_troff(item, 1, &c);
     manidx_need(100 + strlen(c));
-    sprintf(manidx+mip, "<DT><A HREF=\"#%s\">%s</A></DT><DD>\n", label, c);
+    sprintf(manidx+mip, "<DT><a href=\"#%s\">%s</a></DT><DD>\n", label, c);
     if (c) free(c);
     while (manidx[mip]) mip++;
 }
@@ -2299,7 +2306,7 @@ sh_below:
                     out_html("<h2>");
                     is_first_h2 = false;
                 } else {
-                    out_html("</div>\n<h2>")
+                    out_html("</div>\n<h2>");
                 }
                 mandoc_synopsis = (strncmp(c, "SYNOPSIS", 8) == 0);
                 c = (mandoc_command ? scan_troff_mandoc : scan_troff)(c,1,NULL);
