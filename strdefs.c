@@ -348,3 +348,5 @@ LONGSTRDEF* find_longstrdef(LONGSTRDEF * head, int nr, char * longname, char ** 
     *p = c;
     return de;
 }
+
+/* vim: set ts=8 sw=4 tw=0 et :*/

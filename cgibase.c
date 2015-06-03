@@ -159,3 +159,5 @@ void
 url_html(char *g) {
     printf("<A HREF=\"%s\">%s</A>", g, g);
 }
+
+/* vim: set ts=8 sw=4 tw=0 et :*/

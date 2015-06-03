@@ -29,3 +29,5 @@ AC_CHECK_FUNCS([strchr strdup strrchr strstr])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
+
+# vim: set ts=8 sw=4 tw=0 et :

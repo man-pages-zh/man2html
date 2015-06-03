@@ -18,3 +18,5 @@ nobase_dist_script_DATA = scripts/cgi-bin/man/man2html scripts/cgi-bin/man/manse
 			  scripts/cgi-aux/man/man.aux 				     \
 			  scripts/cgi-aux/man/mansearch.aux			     \
 			  scripts/cgi-aux/man/mansearchhelp.aux
+
+#  vim: set ts=8 sw=4 tw=0 noet :

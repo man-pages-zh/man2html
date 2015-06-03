@@ -51,3 +51,5 @@ extern void set_current_html_links(void);
 extern void *xmalloc(size_t size);
 extern void *xrealloc(void *ptr, size_t size);
 extern char *xstrdup(const char *s);
+
+/* vim: set ts=8 sw=4 tw=0 et :*/
