@@ -8,6 +8,15 @@ struct STRDEF {
     STRDEF *next;
 };
 
+typedef struct LONGSTRDEF LONGSTRDEF;
+struct LONGSTRDEF {
+    int nr,slen;
+    char *longname;
+    char *st;
+    LONGSTRDEF *next;
+};
+
+
 typedef struct INTDEF INTDEF;
 struct INTDEF {
     int nr;
@@ -16,12 +25,14 @@ struct INTDEF {
     INTDEF *next;
 };
 
-extern STRDEF *chardef, *strdef, *defdef;
+extern STRDEF *chardef, *strdef;
+extern LONGSTRDEF *defdef;
 extern INTDEF *intdef;
 
 #define V(A,B) ((A)*256+(B))
 
 #include <sys/types.h>
+extern LONGSTRDEF *find_longstrdef(LONGSTRDEF* head, int nr, char * longname, char ** out_longname);
 extern void stdinit(void);
 extern void print_sig(void);
 extern char *lookup_abbrev(char *);
@@ -40,3 +51,5 @@ extern void set_current_html_links(void);
 extern void *xmalloc(size_t size);
 extern void *xrealloc(void *ptr, size_t size);
 extern char *xstrdup(const char *s);
+
+/* vim: set ts=8 sw=4 tw=0 et :*/

@@ -48,8 +48,7 @@ char *abbrev_list[] = {
     "4ASSY", "Sun-4 Assembly Language Reference",
     "SARCH", "<FONT SIZE=\"-1\">SPARC</FONT> Architecture Manual",
     "KR", "The C Programming Language",
-    0, 0
-};
+    0, 0 };
 
 char *lookup_abbrev (char *s)
 {
@@ -61,3 +60,5 @@ char *lookup_abbrev (char *s)
         i = i+2;
     return abbrev_list[i] ? abbrev_list[i+1] : s;
 }
+
+/* vim: set ts=8 sw=4 tw=0 et :*/

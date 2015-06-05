@@ -1,5 +1,5 @@
 /*
- * Here are the routines of man2html that output a href string.
+ * Here are the routines of man2html that output a HREF string.
  */
 
 #include <stdlib.h>
@@ -24,13 +24,13 @@ static int current_html_style = 0;
 /*
  * Either the user is non-local (or local, but using httpd),
  * in which case we use http:/cgi-bin, or the user is local
- * and uses lynx, and we use lynxcgi:/home/httpd/cgi-bin.
+ * and uses lynx, and we use lynxcgi:/usr/lib/cgi-bin.
  */
 
-static char *man2htmlpath = "man"; 	/* default */
+static char *man2htmlpath = "/cgi-bin/man/man2html"; 	/* default */
 static char *cgibase_format = "http://%s"; 		/* host.domain:port */
 static char *cgibase_ll_format = "lynxcgi:%s"; 		/* directory */
-static char *cgibase = "http://man-pages-zh.github.io";		/* default */
+static char *cgibase = "";				/* default */
 
 /*
  * Separator between URL and argument string.
@@ -79,11 +79,11 @@ set_current_html_links(void) {
 }
 
 /* What shall we say in case of relat_html_style? */
-static char *signature = "<hr>\n"
-                         "This document was created by\n"
-                         "<a href=\"http://github.com/man-pages-zh/man2html/\">man2html</a>,\n"
-                         "using the manual pages.<br>\n"
-                         "%s";
+static char *signature = "<hr />\n"
+"This document was created by\n"
+"<a href=\"http://github.com/man-pages-zh/man2html/\">man2html</a>,\n"
+"using the manual pages.<br />\n"
+"%s\n";
 
 #define TIMEFORMAT "%T GMT, %B %d, %Y"
 #define TIMEBUFSZ	500
@@ -92,13 +92,13 @@ void print_sig()
 {
     char timebuf[TIMEBUFSZ];
     struct tm *timetm;
-    time_t clock;
+    time_t now;
 
     timebuf[0] = 0;
 #ifdef TIMEFORMAT
     sprintf(timebuf, "Time: ");
-    clock=time(NULL);
-    timetm=gmtime(&clock);
+    now=time(NULL);
+    timetm=gmtime(&now);
     strftime(timebuf+6, TIMEBUFSZ-6, TIMEFORMAT, timetm);
     timebuf[TIMEBUFSZ-1] = 0;
 #endif
@@ -108,7 +108,7 @@ void print_sig()
 
 void
 include_file_html(char *g) {
-    printf("<a href=\"file:/usr/include/%s\">%s</a>&gt;", g,g);
+    printf("<a href=\"file:///usr/include/%s\">%s</a>&gt;", g,g);
 }
 
 void
@@ -116,27 +116,27 @@ man_page_html(char *sec, char *h) {
     if (current_html_style) {
         if (!h)
             printf("<a href=\"./\">"
-                   "Return to Main Contents</a>");
+                    "Return to Main Contents</a>");
         else
             printf("<a href=\"./%s.html\">%s</a>",
-                   h, h);
+                    h, h);
     } else if (relat_html_style) {
         if (!h)
             printf("<a href=\"../index.html\">"
-                   "Return to Main Contents</a>");
+                    "Return to Main Contents</a>");
         else
             printf("<a href=\"../man%s/%s.%s.html\">%s</a>",
-                   sec, h, sec, h);
+                    sec, h, sec, h);
     } else {
         if (!h)
             printf("<a href=\"%s%s\">Return to Main Contents</a>",
-                   cgibase, man2htmlpath);
+                    cgibase, man2htmlpath);
         else if (!sec)
             printf("<a href=\"%s%s%c%s\">%s</a>",
-                   cgibase, man2htmlpath, sep, h, h);
+                    cgibase, man2htmlpath, sep, h, h);
         else
-            printf("<a href=\"../man%s/%s.%s.html\">%s</a>",
-                   sec, h, sec, h);
+            printf("<a href=\"%s%s%c%s+%s\">%s</a>",
+                    cgibase, man2htmlpath, sep, sec, h, h);
     }
 }
 
@@ -159,3 +159,5 @@ void
 url_html(char *g) {
     printf("<a href=\"%s\">%s</a>", g, g);
 }
+
+/* vim: set ts=8 sw=4 tw=0 et :*/

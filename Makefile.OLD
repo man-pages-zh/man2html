@@ -1,28 +1,30 @@
 #
-# Generated automatically from Makefile.in by the
+# Generated automatically from ./man2html/Makefile.in by the
 # configure script.
 #
-CC = gcc
-CFLAGS += -Wall -Wstrict-prototypes -Wmissing-prototypes
+CFLAGS += -Wall -Wstrict-prototypes -Wmissing-prototypes -DGUNZIP='"/bin/gunzip -c"' $(DEBIAN_CFLAGS)
 OBJECTS = man2html.o cgibase.o abbrev.o strdefs.o
-bindir = ~/software/bin
-mandir = ~/software/share/man
-vardir = /usr/local/var
-httpdir = /home/httpd
+EXEEXT = 
+bindir = $(DESTDIR)$(PREFIX)/usr/bin
+mandir = $(DESTDIR)$(PREFIX)/usr/man
+vardir = $(DESTDIR)$(PREFIX)/var
+httpdir = $(DESTDIR)$(PREFIX)/home/httpd
+cgidir = $(DESTDIR)$(PREFIX)/usr/lib/cgi-bin/man
+sharedir = $(DESTDIR)$(PREFIX)/usr/share/man2html
 cgiowner = nobody
 cgigroup = nobody
 
-all: man2html hman
+all: man2html$(EXEEXT) hman
 
-man2html:	$(OBJECTS)
-	$(CC) $(LDFLAGS) -o man2html $(OBJECTS)
+man2html$(EXEEXT):	$(OBJECTS)
+	$(CC) $(LDFLAGS) -o man2html$(EXEEXT) $(OBJECTS)
 
 # man2html:	../src/version.h
 
 # This installs the man2html utility
-install:	man2html
+install:	man2html$(EXEEXT)
 	mkdir -p $(bindir)
-	install -m 755 man2html $(bindir)
+	install -m 755 man2html$(EXEEXT) $(bindir)
 	mkdir -p $(mandir)/man1
 	install -m 644 man2html.1 $(mandir)/man1/man2html.1
 
@@ -32,10 +34,10 @@ install-scripts: install-man-scripts install-glimpse-stuff install-hman
 #   http://localhost/cgi-bin/man/man2html
 # to work.
 install-man-scripts:
-	mkdir -p $(httpdir)/cgi-bin/man
-	mkdir -p $(httpdir)/cgi-aux/man
-	install -m 755 scripts/cgi-bin/man/* $(httpdir)/cgi-bin/man
-	install -m 644 scripts/cgi-aux/man/* $(httpdir)/cgi-aux/man
+	mkdir -p $(cgidir)
+	mkdir -p $(sharedir)
+	install -m 755 scripts/cgi-bin/man/* $(cgidir)
+	install -m 644 scripts/cgi-aux/man/* $(sharedir)
 	install -d -o $(cgiowner) -g $(cgigroup) -m 775 $(vardir)/man2html
 # (aux was renamed to cgi-aux since aux causes problems under DOS)
 
@@ -54,14 +56,14 @@ install-glimpse-stuff:
 # you can set MANHTMLHOST if the pages are not on localhost.
 hman: hman.sh
 	rm -f hman
-	sed -e 's,%version%,man-1.6f,' hman.sh > hman
+	sed -e 's,%version%,man-1.6g,' hman.sh > hman
 
 install-hman: hman
 	install -m 555 hman $(bindir)/hman
 	install -m 644 hman.1 $(mandir)/man1/hman.1
 
 clean:
-	rm -f core hman man2html $(OBJECTS) *~
+	rm -f core hman man2html$(EXEEXT) $(OBJECTS) *~
 
 spotless:	clean
 	rm -f Makefile

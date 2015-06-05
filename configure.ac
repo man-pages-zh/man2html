@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([man2html], [1.6f-1], [https://github.com/man-pages-zh/man2html/], [man2html])
+AC_INIT([man2html], [1.6g-7p1], [https://github.com/man-pages-zh/man2html/], [man2html])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([defs.h])
 AC_CONFIG_HEADERS([config.h])
@@ -29,3 +29,5 @@ AC_CHECK_FUNCS([strchr strdup strrchr strstr])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
+
+# vim: set ts=8 sw=4 tw=0 et :
